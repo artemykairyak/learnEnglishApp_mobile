@@ -11,16 +11,26 @@
   },
   "dependencies": {
     "@eva-design/eva": "^2.0.0",
+    "@hookform/resolvers": "^2.2.0",
     "@react-native-async-storage/async-storage": "^1.15.2",
+    "@react-navigation/bottom-tabs": "^5.11.9",
     "@react-navigation/native": "^5.9.4",
+    "@react-navigation/stack": "^5.14.4",
     "@ui-kitten/components": "^5.0.0",
     "@ui-kitten/eva-icons": "^5.0.0",
     "axios": "^0.21.1",
     "react": "17.0.1",
+    "react-hook-form": "^7.0.5",
     "react-native": "0.64.0",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-reanimated": "^2.1.0",
+    "react-native-safe-area-context": "^3.2.0",
+    "react-native-screens": "^3.1.0",
     "react-native-svg": "^12.1.1-0",
     "react-redux": "^7.2.3",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

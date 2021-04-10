@@ -2,13 +2,46 @@ import React from 'react'
 import * as eva from '@eva-design/eva'
 import {EvaIconsPack} from '@ui-kitten/eva-icons'
 import * as theme from './src/assets/theme.json'
-import {SafeAreaView, ScrollView, StatusBar, StyleSheet,} from 'react-native'
+import {SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity,} from 'react-native'
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components'
 import {NavigationContainer} from '@react-navigation/native'
 import {globalStyles} from './src/assets/styles/globalStyles'
-import {accentColor} from './src/constants'
+import {accentColor, font, infoColor} from './src/constants'
+import {BottomTabs} from './src/components/BottomTabs'
+import {useSelector} from 'react-redux'
+import {getIsLogged} from './src/redux/auth/authSelectors'
+import {getInitialized} from './src/redux/app/appSelectors'
+import {AuthScreen} from './src/screens/Auth/AuthScreen'
+import {store} from './src/redux/store'
+import {setGlobalError} from './src/redux/app/appReducer'
+
+
+// @ts-ignore
+TouchableOpacity.defaultProps = {
+// @ts-ignore
+	...TouchableOpacity.defaultProps,
+	activeOpacity: 0.8,
+}
+
+// @ts-ignore
+Text.defaultProps = {
+// @ts-ignore
+	...Text.defaultProps,
+	color: 'red',
+	fontFamily: font
+}
+
+export const handleGlobalError = (err: any) => {
+	console.log(1111, err);
+	store.dispatch<any>(setGlobalError(true, err?.message));
+};
+
 
 const App: React.FC = () => {
+	const logged = useSelector(getIsLogged)
+	const isInitialized = useSelector(getInitialized)
+
+
 	return (
 		<>
 			<IconRegistry icons={EvaIconsPack}/>
@@ -17,11 +50,11 @@ const App: React.FC = () => {
 					<>
 						<SafeAreaView style={globalStyles.container}>
 							<StatusBar backgroundColor={accentColor}/>
-							<ScrollView
-								contentInsetAdjustmentBehavior="automatic"
-								style={s.scroll}>
-
-							</ScrollView>
+							{logged ?
+								<BottomTabs/>
+								:
+								<AuthScreen/>
+							}
 						</SafeAreaView>
 					</>
 				</NavigationContainer>
