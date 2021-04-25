@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
 import {AddWordScreen} from '../screens/AddWord/AddWordScreen';
 import {BottomNavigation, BottomNavigationTab, Icon} from '@ui-kitten/components';
-import {accentColor, successColor} from '../constants';
+import {accentColor, errorColor, successColor} from '../constants';
 import {TestScreen} from '../screens/Test/TestScreen';
 import {ProfileScreen} from '../screens/Profile/ProfileScreen';
 
@@ -47,16 +47,16 @@ const ProfileStackScreen = () => {
     );
 };
 
-const AddWordIcon = (props) => (
-    <Icon {...props} fill={'#ffffff'} name='at-outline'/>
+const AddWordIcon = ({selected, ...props})  => (
+    <Icon {...props} fill={selected ? successColor : errorColor} name='at-outline'/>
 );
 
-const TestIcon = (props) => (
-    <Icon {...props} fill={'#ffffff'} name='award-outline'/>
+const TestIcon = ({selected, ...props})  => (
+    <Icon {...props} fill={errorColor} name='award-outline'/>
 );
 
-const ProfileIcon = (props) => (
-    <Icon {...props} fill={'#ffffff'} name='person-outline'/>
+const ProfileIcon = ({selected, ...props}) => (
+    <Icon {...props} fill={errorColor} name='person-outline'/>
 );
 
 
@@ -77,8 +77,11 @@ const BottomTabBar = ({...props}) => {
 
 export const BottomTabs = ({}) => {
     return (
-        <Navigator tabBar={props => <BottomTabBar {...props} />}>
-            <Screen name='AddWord' component={AddWordStackScreen}/>
+        <Navigator
+                   tabBar={props => <BottomTabBar {...props} />}>
+            <Screen name='AddWord'
+                    component={AddWordStackScreen}
+            />
             <Screen name='Test' component={TestStackScreen}/>
             <Screen name='Profile' component={ProfileStackScreen}/>
         </Navigator>
@@ -87,6 +90,8 @@ export const BottomTabs = ({}) => {
 
 const s = StyleSheet.create({
     tabs: {
+        borderTopColor: errorColor,
+        borderTopWidth: 1,
         backgroundColor: accentColor
     },
 });

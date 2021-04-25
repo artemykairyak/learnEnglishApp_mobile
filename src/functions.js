@@ -5,6 +5,7 @@ import {font, infoColor} from './constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function returnState(state, action, stateKey, actionKey) {
+	console.log(state, action, stateKey, actionKey);
 	return {
 		...state,
 		[stateKey]: action[!actionKey ? stateKey : actionKey]
@@ -86,3 +87,10 @@ export const removeDataFromAsyncStorage = async (key) => {
 		return e;
 	}
 };
+
+export const getRandomNumberInRange = (min = 0, max) => {
+	min = Math.ceil(min)
+	max = Math.floor(max)
+
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}

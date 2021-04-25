@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react'
-import {StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native'
+import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native'
 import {Button, Icon, Input} from '@ui-kitten/components'
 import {Controller, useForm} from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-import {errorColor, font, fontBold, infoColor, successColor, white, wrapperPadding} from '../../constants'
-import {login} from '../../redux/auth/authReducer'
-import {useDispatch} from 'react-redux'
+import {yupResolver} from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import {errorColor, font, infoColor, wrapperPadding} from '../../constants'
+import {loginOrRegistration} from '../../redux/auth/authReducer'
+import {useDispatch, useSelector} from 'react-redux'
+import {getErrorText} from '../../redux/auth/authSelectors'
 
 interface IFormInputs {
 	username: string
@@ -16,34 +17,35 @@ interface IFormInputs {
 const schema = yup.object().shape({
 	username: yup.string().required(),
 	password: yup.string().required(),
-});
+})
 
 export const AuthScreen = ({}) => {
-	const { control, handleSubmit, formState: { errors } } = useForm<IFormInputs>({
+	const {control, handleSubmit, formState: {errors}} = useForm<IFormInputs>({
 		resolver: yupResolver(schema)
-	});
+	})
 
 	const dispatch = useDispatch()
-	const [secureTextEntry, setSecureTextEntry] = useState(true);
+	const [secureTextEntry, setSecureTextEntry] = useState(true)
+	const authError = useSelector(getErrorText)
 
 	const toggleSecureEntry = () => {
-		setSecureTextEntry(!secureTextEntry);
-	};
+		setSecureTextEntry(!secureTextEntry)
+	}
 
 	const showPasswordIcon = () => (
 		<TouchableWithoutFeedback onPress={toggleSecureEntry}>
 			<Icon fill={infoColor} style={s.showPasswordIcon} name={secureTextEntry ? 'eye-off' : 'eye'}/>
 		</TouchableWithoutFeedback>
-	);
+	)
 
 	const onSubmit = (data: IFormInputs) => {
-		const {username, password} = data;
-		dispatch(login(username, password))
+		const {username, password} = data
+		dispatch(loginOrRegistration(username, password))
 	}
 
 	useEffect(() => {
 		console.log(errors)
-	},[errors])
+	}, [errors])
 
 	return (
 		<View style={s.container}>
@@ -51,7 +53,7 @@ export const AuthScreen = ({}) => {
 			<View style={s.form}>
 				<Controller
 					control={control}
-					render={({ field: { onChange, onBlur, value } }) => (
+					render={({field: {onChange, onBlur, value}}) => (
 						<Input
 							status={!!errors.username ? 'danger' : 'primary'}
 							style={[s.input, errors.username && s.inputError]}
@@ -67,7 +69,7 @@ export const AuthScreen = ({}) => {
 				/>
 				<Controller
 					control={control}
-					render={({ field: { onChange, onBlur, value } }) => (
+					render={({field: {onChange, onBlur, value}}) => (
 						<Input
 							accessoryRight={showPasswordIcon}
 							style={[s.input, errors.password && s.inputError]}
@@ -82,27 +84,12 @@ export const AuthScreen = ({}) => {
 					name="password"
 					defaultValue=""
 				/>
-				{/*{errors.username && <Text>Заполните обязательные поля</Text>}*/}
-				<Button style={s.btn} onPress={handleSubmit(onSubmit)}>Войти</Button>
-				{/*<Input*/}
-				{/*	status={error ? 'danger' : 'success'}*/}
-				{/*	placeholder={placeholder}*/}
-				{/*	value={value}*/}
-				{/*	textStyle={{...addTextStyles}}*/}
-				{/*	style={[!disabled ? {backgroundColor: '#fff'} : {backgroundColor: bgColor}, {...addInputStyles}]}*/}
-				{/*	accessoryRight={() => rightIcon}*/}
-				{/*	accessoryLeft={leftIcon && (() => <Icon name={leftIcon.name}*/}
-				{/*											fill={error ? red : gray}*/}
-				{/*											style={leftIcon.style}/>)}*/}
-				{/*	onChangeText={nextValue => {*/}
-				{/*		setValue(nextValue);*/}
-				{/*		onChange(nextValue);*/}
-				{/*	}}*/}
-				{/*/>*/}
+				<Button style={s.btn} onPress={handleSubmit(onSubmit)}>Войти/Зарегистрироваться</Button>
 			</View>
-			<TouchableOpacity style={s.alternateBtnContainer}>
-				<Text style={s.alternateBtn}>Зарегистрироваться</Text>
-			</TouchableOpacity>
+			{/*<TouchableOpacity style={s.alternateBtnContainer}>*/}
+			{/*	<Text style={s.alternateBtn}>Зарегистрироваться</Text>*/}
+			{/*</TouchableOpacity>*/}
+			<Text style={s.error}>{authError}</Text>
 		</View>
 	)
 }
@@ -143,5 +130,10 @@ const s = StyleSheet.create({
 	},
 	alternateBtn: {
 		fontSize: 14
+	},
+	error: {
+		marginTop: 15,
+		lineHeight: 20,
+		color: errorColor
 	}
 })

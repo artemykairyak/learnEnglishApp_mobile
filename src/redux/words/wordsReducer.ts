@@ -1,9 +1,8 @@
 import {ActionsTypes} from '../store'
-import {getDataFromAsyncStorage, returnState, setDataToAsyncStorage} from '../../functions'
+import {returnState} from '../../functions'
 import {Dispatch} from 'redux'
 import {appActions} from '../app/appReducer'
 import AuthAPI from '../../api/AuthAPI'
-import {TOKEN_NAME} from '../../constants'
 
 let initialState = {
 	logged: false, loading: false, errorText: ''
@@ -27,17 +26,7 @@ export const authActions = {
 	setIsLoggedAC: (isLogged: boolean) => ({type: 'SET_IS_LOGGED', isLogged} as const),
 	setLoadingAC: (isLoading: boolean) => ({type: 'SET_IS_LOADING', isLoading} as const),
 	setErrorTextAC: (errorText: string) => ({type: 'SET_ERROR_TEXT', errorText} as const),
-}
-
-export const checkLogin = () => async (dispatch: Dispatch) => {
-	console.log('here')
-	await dispatch(appActions.setLoading(true))
-	const tokenFromAsyncStorage = await getDataFromAsyncStorage(TOKEN_NAME)
-
-	if(tokenFromAsyncStorage) {
-		await dispatch(authActions.setIsLoggedAC(true))
-	}
-	await dispatch(appActions.setLoading(false))
+	checkIsLogged: () => ({type: 'CHECK_IS_LOGGED'} as const),
 }
 
 export const loginOrRegistration = (username: string, password: string) => async (dispatch: Dispatch) => {
@@ -45,15 +34,13 @@ export const loginOrRegistration = (username: string, password: string) => async
 	const loginRes = await AuthAPI.login(username, password)
 
 	if(loginRes.statusCode === 200) {
-		await setDataToAsyncStorage(TOKEN_NAME, loginRes.token)
-		await dispatch(authActions.setIsLoggedAC(true))
+		console.log('ok')
 		await dispatch(authActions.setErrorTextAC(''))
 	} else {
 		const registrationRes = await AuthAPI.registration(username, password)
 
 		if(registrationRes.statusCode === 200) {
-			await setDataToAsyncStorage(TOKEN_NAME, loginRes.token)
-			await dispatch(authActions.setIsLoggedAC(true))
+			console.log('Успешно зарегистрирован')
 			await dispatch(authActions.setErrorTextAC(''))
 		} else {
 			const errorText: Array<string> = [];

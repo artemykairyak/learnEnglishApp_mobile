@@ -2,10 +2,13 @@ import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {appReducer} from './app/appReducer'
 import {authReducer} from './auth/authReducer'
+import {testReducer} from './Test/testReducer'
+import {createSelectorHook} from 'react-redux'
 
 let rootReducer = combineReducers({
 	app: appReducer,
-	auth: authReducer
+	auth: authReducer,
+	test: testReducer
 });
 
 export let store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
