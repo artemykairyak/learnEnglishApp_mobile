@@ -1,7 +1,7 @@
 import {ActionsTypes} from '../store'
 import {getDataFromAsyncStorage, returnState, setDataToAsyncStorage} from '../../functions'
 import {Dispatch} from 'redux'
-import {appActions} from '../app/appReducer'
+import {appActions} from '../App/appReducer'
 import AuthAPI from '../../api/AuthAPI'
 import {TOKEN_NAME} from '../../constants'
 

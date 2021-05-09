@@ -1,8 +1,8 @@
-import {accentColor, infoColor} from '../../constants'
+import {bgColor} from '../../constants'
 
 export const globalStyles = {
-    container: {
-        backgroundColor: accentColor,
-        flex: 1
-    },
+	container: {
+		flex: 1,
+		backgroundColor: bgColor
+	},
 }

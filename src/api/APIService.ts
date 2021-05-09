@@ -16,7 +16,6 @@ class API {
 		console.log('res', response)
 		if (response.data.statusCode !== 200) {
 			handleGlobalError(response.data.message);
-			// return Promise.reject(response?.message);
 		}
 		return response;
 	};

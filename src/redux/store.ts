@@ -1,7 +1,7 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import {appReducer} from './app/appReducer'
-import {authReducer} from './auth/authReducer'
+import {appReducer} from './App/appReducer'
+import {authReducer} from './Auth/authReducer'
 import {testReducer} from './Test/testReducer'
 import {createSelectorHook} from 'react-redux'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import {StyleSheet, TouchableOpacity, View} from 'react-native'
 import {Icon, Text} from '@ui-kitten/components'
-import {errorColor, successColor, width, wrapperPadding} from '../constants'
+import {bgColor, errorColor, infoColor, successColor, width, wrapperPadding} from '../constants'
 import {AlertType} from '../types'
 
 interface IAlertProps {
@@ -44,7 +44,7 @@ const s = StyleSheet.create({
 		flex: 0,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#f6fafb',
+		backgroundColor: infoColor,
 		paddingHorizontal: width / 30,
 		paddingVertical: width / 15,
 		elevation: 5,
@@ -55,7 +55,9 @@ const s = StyleSheet.create({
 		height: 50,
 		marginBottom: 15
 	},
-	text: {},
+	text: {
+		color: bgColor
+	},
 	closeIconBtn: {
 		position: 'absolute',
 		top: 0,
@@ -66,7 +68,6 @@ const s = StyleSheet.create({
 		paddingLeft: 10
 	},
 	closeIcon: {
-
 		width: 30,
 		height: 30
 	}

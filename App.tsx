@@ -1,20 +1,19 @@
 import React, {useEffect} from 'react'
 import * as eva from '@eva-design/eva'
 import {EvaIconsPack} from '@ui-kitten/eva-icons'
-import * as theme from './src/assets/theme.json'
 import {SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity,} from 'react-native'
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components'
 import {NavigationContainer} from '@react-navigation/native'
 import {globalStyles} from './src/assets/styles/globalStyles'
-import {accentColor, font} from './src/constants'
+import {accentColor, bgColorDark, font, textColor} from './src/constants'
 import {BottomTabs} from './src/components/BottomTabs'
 import {useDispatch, useSelector} from 'react-redux'
-import {getIsLogged} from './src/redux/auth/authSelectors'
-import {getInitialized} from './src/redux/app/appSelectors'
+import {getIsLogged} from './src/redux/Auth/authSelectors'
+import {getInitialized, getState} from './src/redux/App/appSelectors'
 import {AuthScreen} from './src/screens/Auth/AuthScreen'
 import {store} from './src/redux/store'
-import {setGlobalError} from './src/redux/app/appReducer'
-import {checkLogin} from './src/redux/auth/authReducer'
+import {setGlobalError} from './src/redux/App/appReducer'
+import {checkLogin} from './src/redux/Auth/authReducer'
 
 
 // @ts-ignore
@@ -28,7 +27,7 @@ TouchableOpacity.defaultProps = {
 Text.defaultProps = {
 // @ts-ignore
 	...Text.defaultProps,
-	color: 'red',
+	color: textColor,
 	fontFamily: font
 }
 
@@ -41,6 +40,7 @@ export const handleGlobalError = (err: any) => {
 const App: React.FC = () => {
 	const logged = useSelector(getIsLogged)
 	const isInitialized = useSelector(getInitialized)
+	const state = useSelector(getState)
 	const dispatch = useDispatch()
 
 	useEffect(() => {
@@ -48,17 +48,17 @@ const App: React.FC = () => {
 	}, [])
 
 	useEffect(() => {
-		console.log(store.getState())
-	}, [store])
+		console.log(state)
+	}, [state])
 
 	return (
 		<>
 			<IconRegistry icons={EvaIconsPack}/>
-			<ApplicationProvider {...eva} theme={theme}>
+			<ApplicationProvider {...eva} theme={eva.dark}>
 				<NavigationContainer>
 					<>
 						<SafeAreaView style={globalStyles.container}>
-							<StatusBar backgroundColor={accentColor}/>
+							<StatusBar backgroundColor={bgColorDark}/>
 							{logged ?
 								<BottomTabs/>
 								:

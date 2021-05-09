@@ -4,9 +4,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
 import {AddWordScreen} from '../screens/AddWord/AddWordScreen';
 import {BottomNavigation, BottomNavigationTab, Icon} from '@ui-kitten/components';
-import {accentColor, errorColor, successColor} from '../constants';
+import {accentColor, errorColor, infoColor, successColor} from '../constants';
 import {TestScreen} from '../screens/Test/TestScreen';
 import {ProfileScreen} from '../screens/Profile/ProfileScreen';
+import {MyWordsScreen} from '../screens/MyWords/MyWordsScreen';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 const AddWordStack = createStackNavigator();
@@ -42,21 +43,22 @@ const ProfileStackScreen = () => {
     return (
         <AddWordStack.Navigator
             screenOptions={stackOptions}>
-            <AddWordStack.Screen name="Profile" component={ProfileScreen}/>
+            <ProfileStack.Screen name="Profile" component={ProfileScreen}/>
+            <ProfileStack.Screen name="MyWords" component={MyWordsScreen}/>
         </AddWordStack.Navigator>
     );
 };
 
 const AddWordIcon = ({selected, ...props})  => (
-    <Icon {...props} fill={selected ? successColor : errorColor} name='at-outline'/>
+    <Icon {...props} fill={selected ? successColor : infoColor} name='at-outline'/>
 );
 
 const TestIcon = ({selected, ...props})  => (
-    <Icon {...props} fill={errorColor} name='award-outline'/>
+    <Icon {...props} fill={infoColor} name='award-outline'/>
 );
 
 const ProfileIcon = ({selected, ...props}) => (
-    <Icon {...props} fill={errorColor} name='person-outline'/>
+    <Icon {...props} fill={infoColor} name='person-outline'/>
 );
 
 
@@ -90,8 +92,8 @@ export const BottomTabs = ({}) => {
 
 const s = StyleSheet.create({
     tabs: {
-        borderTopColor: errorColor,
-        borderTopWidth: 1,
-        backgroundColor: accentColor
+        // borderTopColor: errorColor,
+        // borderTopWidth: 1,
+        // backgroundColor: accentColor
     },
 });

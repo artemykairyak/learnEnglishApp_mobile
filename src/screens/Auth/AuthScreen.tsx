@@ -5,9 +5,9 @@ import {Controller, useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import {errorColor, font, infoColor, wrapperPadding} from '../../constants'
-import {loginOrRegistration} from '../../redux/auth/authReducer'
+import {loginOrRegistration} from '../../redux/Auth/authReducer'
 import {useDispatch, useSelector} from 'react-redux'
-import {getErrorText} from '../../redux/auth/authSelectors'
+import {getErrorText} from '../../redux/Auth/authSelectors'
 
 interface IFormInputs {
 	username: string
