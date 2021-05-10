@@ -1,7 +1,8 @@
 import API from './APIService'
+import {IResponseWithWords} from './types'
 
 class ProfileAPI {
-	getMyWords = () => API.get('/api/myWords');
+	getMyWords = () => API.get<IResponseWithWords>('/api/myWords')
 }
 
-export default new ProfileAPI();
+export default new ProfileAPI()

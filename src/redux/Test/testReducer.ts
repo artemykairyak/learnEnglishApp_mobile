@@ -25,9 +25,8 @@ export const getWordsForTest = () => async (dispatch: Dispatch) => {
 	const wordsForTest = await WordsAPI.getWordsForTest()
 	if(wordsForTest.statusCode === StatusCodes.success) {
 		await dispatch(testActions.setWordsForTestAC(wordsForTest.words))
-
 	}
-	await dispatch(appActions.setLoading(true))
+	await dispatch(appActions.setLoading(false))
 }
 
 export const clearWordsForTest = () => async (dispatch: Dispatch) => {
